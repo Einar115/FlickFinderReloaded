@@ -1,0 +1,56 @@
+@if (album) {
+  <section class="container my-5">
+    <div class="row">
+      <div class="col-md-4">
+        <img [src]="album.image" class="img-fluid rounded" alt="Portada de {{ album.name }}" />
+      </div>
+      <div class="col-md-8">
+        <h1>{{ album.name }}</h1>
+        <h3 class="text-muted">{{ album.artistName }}</h3>
+        <p class="text-muted">Año: {{ album.year }}</p>
+        
+        @if (album.spotifyId) {
+          <a [href]="'https://open.spotify.com/album/' + album.spotifyId" 
+             class="btn btn-success mb-3" 
+             target="_blank">
+            <i class="bi bi-spotify"></i> Escuchar en Spotify
+          </a>
+        }
+        
+        @if (isLoggedIn) {
+          <button class="btn btn-primary ms-2 mb-3" (click)="addToFavorites('album', album.id)">
+            <i class="bi bi-heart"></i> Agregar a favoritos
+          </button>
+        }
+        
+        <h4 class="mt-4">Lista de canciones</h4>
+        <div class="list-group">
+          @for (track of album.tracks; track track.id) {
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-muted me-2">{{ track.trackNumber }}.</span>
+                  {{ track.name }}
+                  @if (track.explicit) {
+                    <span class="badge bg-dark ms-2">EXPLICIT</span>
+                  }
+                </div>
+                <div class="text-muted">
+                  {{ track.durationMs | duration }} min
+                  @if (track.spotifyId) {
+                    <a [href]="'https://open.spotify.com/track/' + track.spotifyId" 
+                       class="btn btn-sm btn-outline-success ms-2" 
+                       target="_blank">
+                       ir
+                      <i class="bi bi-play-fill"></i>
+                    </a>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+}

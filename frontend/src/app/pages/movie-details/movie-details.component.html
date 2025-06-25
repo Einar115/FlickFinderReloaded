@@ -1,0 +1,21 @@
+@if (movie) {
+  <section class="container my-5">
+    <div class="row">
+      <div class="col-md-4">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.img" class="img-fluid" alt="Poster de {{ movie.title }}" />
+      </div>
+      <div class="col-md-8">
+        <h2>{{ movie.title }}</h2>
+        <p>{{ movie.description }}</p>
+        <p><strong>Puntuación:</strong> {{ movie.voteAverage }}</p>
+        <p><strong>Fecha de lanzamiento:</strong> {{ movie.releaseDate | releaseDate }}</p>
+        @if (movie.homepage) {
+          <a [href]="movie.homepage" class="btn btn-primary" target="_blank">Página oficial</a>
+        }
+        @if (isLoggedIn) {
+          <button class="btn btn-success" (click)="addToFavorites('pelicula', movie.id)">Agregar a favoritos</button>
+        }
+      </div>
+    </div>
+  </section>
+}
