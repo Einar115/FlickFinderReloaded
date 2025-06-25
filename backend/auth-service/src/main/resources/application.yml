@@ -4,3 +4,27 @@ server:
 spring:
   application:
     name: auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/flickfinder_db
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+app:
+  jwt:
+    issuer: auth-service
+    secret: ejemplo-de-firma-secreta-1224412453
+    access-token:
+      expiration-ms: 86400000
+
+    refresh-token:
+      expiration-ms: 604800000
