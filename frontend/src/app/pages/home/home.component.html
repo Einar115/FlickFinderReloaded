@@ -1,0 +1,52 @@
+<!-- Bienvenida -->
+<div class="jumbotron text-center bg-light py-5">
+  <h1 class="display-4 maintitle">¡Descubre películas y musica adaptadas a tus gustos!</h1>
+  <p class="lead">Explora un mundo de entretenimiento personalizado.</p>
+</div>
+
+<!-- Recomendaciones -->
+@if (isLoggedIn) {
+<app-recomendacion></app-recomendacion>
+}
+
+<!-- Tendencias -->
+<section class="container my-5">
+  <h2 class="text-center">Películas mas recientes</h2>
+  <div class="row">
+    @for (movie of movies; track movie) {
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img [src]="'https://image.tmdb.org/t/p/w500' + movie.img" class="card-img-top" alt="Poster de {{ movie.title }}" />
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text">Puntuación: {{ movie.voteAverage }}</p>
+            <p class="card-text">{{ movie.releaseDate | releaseDate }}</p>
+            <button class="btn btn-primary" (click)="goToMovieDetails(movie.id)">Más detalles</button>
+          @if (isLoggedIn) {
+            <button class="btn btn-success" (click)="addToFavorites('pelicula', movie.id)">Agregar a favoritos</button>
+          }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Temas musicales nuevos -->
+<section class="container my-5">
+  <h3 class="text-center mt-5">Nuevos Álbumes</h3>
+  <ul class="list-group">
+    @for (album of albums; track album) {
+      <li class="list-group-item d-flex align-items-center">
+        <img src="{{ album.image }}" alt="Cover of {{ album.name }}" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+        <div class="flex-grow-1">
+          <strong>{{ album.name }}</strong> - {{ album.artistName }}
+        </div>
+        <button class="btn btn-primary btn-sm ms-auto" (click)="goToAlbumDetails(album.id)">Más detalles</button>
+        @if (isLoggedIn) {
+          <button class="btn btn-success btn-sm ms-auto" (click)="addToFavorites('album', album.id)">Añadir a favoritos</button>
+        }
+      </li>
+    }
+  </ul>
+</section>
