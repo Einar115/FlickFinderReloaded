@@ -1,0 +1,70 @@
+<div class="container my-5">
+  <!-- Películas Favoritas -->
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-primary mb-4">Películas Favoritas</h2>
+      @if (movies.length > 0) {
+        <div class="row">
+          @for (movie of movies; track movie) {
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+              <div class="card h-100">
+                <img
+                  [src]="'https://image.tmdb.org/t/p/w500' + movie.img"
+                  class="card-img-top"
+                  alt="{{ movie.title }}"
+                  />
+                <div class="card-body">
+                  <h5 class="card-title">{{ movie.title }}</h5>
+                  <p class="card-text">
+                    <small class="text-muted">Lanzamiento: {{ movie.releaseDate }}</small>
+                  </p>
+                  <button class="btn btn-danger btn-sm w-100"(click)="RemoveMovie(movie.id)">Eliminar de favoritos</button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="alert alert-warning" role="alert">
+          No tienes películas favoritas por el momento.
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Álbumes Favoritos -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h2 class="text-success mb-4">Álbumes Favoritos</h2>
+      @if (albums.length > 0) {
+        <div class="row">
+          @for (album of albums; track album) {
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+              <div class="card h-100">
+                <img
+                  [src]="album.image"
+                  class="card-img-top"
+                  alt="{{ album.name }}"
+                  />
+                <div class="card-body">
+                  <h5 class="card-title">{{ album.name }}</h5>
+                  <p class="card-text">
+                    <small class="text-muted">Artista: {{ album.artistName }}</small>
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">Año de estreno: {{ album.year }}</small>
+                  </p>
+                  <button class="btn btn-danger btn-sm w-100"(click)="removeAlbum(album.id)">Eliminar de favoritos</button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="alert alert-warning" role="alert">
+          No tienes álbumes favoritos por el momento.
+        </div>
+      }
+    </div>
+  </div>
+</div>
