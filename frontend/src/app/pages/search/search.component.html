@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <!-- Barra de búsqueda -->
+  <div class="search-bar d-flex align-items-center">
+    <select [(ngModel)]="searchType" class="form-select me-3" style="width: auto;">
+      <option value="movies">Películas</option>
+      <option value="albums">Álbumes</option>
+    </select>
+    <input type="text" [(ngModel)]="query" class="form-control me-3" placeholder="Buscar..." />
+    <button class="btn btn-primary" (click)="search()">Buscar</button>
+  </div>
+  <h2 class="text-center">Resultados de la busqueda:</h2>
+
+  @if (searchType === 'movies' && movies.length > 0) {
+  <section class="container my-5">
+    <div class="row">
+      @for (movie of movies; track movie) {
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.img" class="card-img-top" alt="Poster de {{ movie.title }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">Puntuación: {{ movie.vote_average }}</p>
+              <p class="card-text">{{ movie.release_date }}</p>
+              <p>{{movie.id}}</p>
+              <button class="btn btn-primary" (click)="goToMovieDetails(movie.id)">Más detalles</button>
+            @if (isLoggedIn) {
+              <button class="btn btn-success" (click)="addToFavorites('pelicula', movie.id)">Agregar a favoritos</button>
+            }
+            </div>
+          </div>
+        </div>
+      }
+    </div> 
+</section>
+}
+
+  <!-- Resultados de álbumes -->
+  @if (searchType === 'albums' && albums.length > 0) {
+    <div class="row mt-4">
+      <div class="list-group">
+        @for (album of albums; track album) {
+          <div class="list-group-item">
+            @if (album.image) {
+              <img
+                [src]="album.image"
+                alt="{{ album.name }}"
+                class="img-thumbnail me-3"
+                style="width: 80px; height: 80px; object-fit: cover;"
+                />
+            }
+            <strong>{{ album.name }}</strong> - {{ album.artist }}
+            <button class="btn btn-primary btn-sm ms-auto" (click)="goToAlbumDetails(album.id)">Más detalles</button>
+            @if (isLoggedIn) {
+            <button class="btn btn-success btn-sm ms-auto" (click)="addToFavorites('album', album.id)">Añadir a favoritos</button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Resultados de temas musicales -->
+  @if (searchType === 'tracks' && tracks.length > 0) {
+    <div class="row mt-4">
+      <div class="list-group">
+        @for (track of tracks; track track) {
+          <div class="list-group-item">
+            @if (track.image) {
+              <img
+                [src]="track.image"
+                alt="{{ track.name }}"
+                class="img-thumbnail me-3"
+                style="width: 80px; height: 80px; object-fit: cover;"
+                />
+            }
+            <strong>{{ track.name }}</strong> - {{ track.artist }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
